@@ -1,6 +1,12 @@
 import click
 
 
-@click.command()
+@click.group()
 def cli():
-    click.echo('Hello World!')
+    pass
+
+
+@cli.command()
+@click.argument('title')
+def create(title):
+    click.echo(title)
