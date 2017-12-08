@@ -26,12 +26,8 @@ setup(
     packages=find_packages(exclude=('tests', 'tests.*')),
     py_modules=['ht'],
     install_requires=install_requires,
-    setup_requires=[
-      'setuptools_git==1.0',  # anything tracked in git gets packaged
-      'wheel==0.26.0',
-    ],
     entry_points='''
-        [console_script],
-        ht=ht:cli
+        [console_script]
+        t=ht.main:cli
     '''
 )
