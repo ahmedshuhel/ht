@@ -26,8 +26,9 @@ setup(
     packages=find_packages(exclude=('tests', 'tests.*')),
     py_modules=['ht'],
     install_requires=install_requires,
-    entry_points='''
-        [console_script]
-        t=ht.main:cli
-    '''
+    entry_points={
+        'console_scripts': [
+            't=ht.main:cli'
+        ]
+    }
 )
