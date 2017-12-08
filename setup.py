@@ -28,7 +28,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            't=ht.main:cli'
+            'ht=ht.main:cli'
         ]
     }
 )
