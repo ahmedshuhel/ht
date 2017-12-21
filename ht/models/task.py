@@ -1,4 +1,10 @@
 from datetime import datetime
+from uuid import uuid4
+
+
+class Base(object):
+    def __init__(self):
+        self.id = uuid4()
 
 
 class TaskError(Exception):
@@ -17,8 +23,9 @@ class Time:
         self.description = description
 
 
-class Task:
+class Task(Base):
     def __init__(self, title):
+        super(Task, self).__init__()
         self.title = title
         self.created_at = datetime.now()
         self.description = ''

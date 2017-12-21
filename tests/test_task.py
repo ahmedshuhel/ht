@@ -12,10 +12,14 @@ def create_task():
     return Task(title=title)
 
 
-def test_create_task():
+@mock.patch('ht.models.task.uuid4')
+def test_create_task(mock_uuid4):
+    uuid = 'a1b2c3'
+    mock_uuid4.return_value = uuid
     task = create_task()
     assert task.title == title
     assert task.state == TaskState.INIT
+    assert task.id == uuid
 
 
 @mock.patch('ht.models.task.datetime')
@@ -107,5 +111,3 @@ def test_throw_if_add_time_in_state_other_than_inprogress():
         task.add_time(10, 'desc')
 
     assert str(err.value) == 'Cannot add time for the task in `init` state'
-
-
