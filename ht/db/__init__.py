@@ -32,6 +32,5 @@ mapper(Task, task_metadata, properties={
 mapper(Time, time_metadata)
 
 engine = create_engine('sqlite:///:memory:', echo=True)
-metadata.create_all(engine)
 
 Session = scoped_session(sessionmaker(bind=engine))

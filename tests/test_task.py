@@ -1,5 +1,6 @@
 import mock
 import pytest
+from ht.db import Session, metadata, engine
 from ht.models.task import Task, TaskState, TaskError
 from datetime import datetime
 
