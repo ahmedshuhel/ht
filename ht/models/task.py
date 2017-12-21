@@ -17,8 +17,9 @@ class TaskState:
     COMPLETED = 'completed'
 
 
-class Time:
+class Time(Base):
     def __init__(self, minutes, description):
+        super(Time, self).__init__()
         self.minutes = minutes
         self.description = description
 
