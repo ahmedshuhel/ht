@@ -4,7 +4,7 @@ from uuid import uuid4
 
 class Base(object):
     def __init__(self):
-        self.id = uuid4()
+        self.id = str(uuid4())
 
 
 class TaskError(Exception):
