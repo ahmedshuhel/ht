@@ -1,17 +1,19 @@
 import mock
 import pytest
-from ht.db import Session, engine
-from ht.db.mapping import metadata
 from ht.models.task import Task, TaskState, TaskError
 from datetime import datetime
 
 
 title = 'This is a new task'
+desc = 'This is description'
 created_at = datetime.min
 
 
 def create_task():
-    return Task(title=title)
+    return Task(
+        title=title,
+        description=desc
+    )
 
 
 @mock.patch('ht.models.task.uuid4')
@@ -20,6 +22,7 @@ def test_create_task(mock_uuid4):
     mock_uuid4.return_value = uuid
     task = create_task()
     assert task.title == title
+    assert task.description == desc
     assert task.state == TaskState.INIT
     assert task.id == uuid
 
@@ -31,10 +34,10 @@ def test_has_created_at(mock_datetime):
     assert task.created_at == created_at
 
 
-def test_add_description():
+def test_update_description():
     desc = 'Fake description'
     task = create_task()
-    task.add_description(desc)
+    task.update_description(desc)
     assert task.description == desc
 
 
@@ -105,55 +108,3 @@ def test_add_time():
     assert task.times[1].minutes == minutes2
     assert task.times[1].description == desc2
     assert task.total_time == minutes1 + minutes2
-
-
-def test_throw_if_add_time_in_state_other_than_inprogress():
-    task = create_task()
-    with pytest.raises(TaskError) as err:
-        task.add_time(10, 'desc')
-
-    assert str(err.value) == 'Cannot add time for the task in `init` state'
-
-
-def test_persist_task_with_all_attributes():
-    metadata.create_all(engine)
-
-    minutes1 = 10
-    minutes2 = minutes1 + 5
-    desc1 = 'dummy description'
-    desc2 = desc1 + 'dummy description'
-    task = create_task()
-    task.start()
-    task.add_time(minutes=minutes1, description=desc1)
-    task.add_time(minutes=minutes2, description=desc2)
-
-    session = Session()
-    session.add(task)
-
-    # commits the changes to db. Automatically expires the attributs
-    session.commit()
-
-    # refresh/un-expire the attars so that we can access them after the task
-    # get's detached
-    session.refresh(task)
-
-    # detach all objects from the session
-    session.expunge_all()
-
-    session.close()
-    Session.remove()
-
-    qs = Session()
-
-    q_task = qs.query(Task).get(task.id)
-    assert q_task.title == task.title
-    assert len(q_task.times) == 2
-    assert q_task.times[0].minutes == minutes1
-    assert q_task.times[1].minutes == minutes2
-    assert q_task.times[0].description == desc1
-    assert q_task.times[1].description == desc2
-    assert q_task.description == task.description
-
-    qs.commit()
-    qs.close()
-    Session.remove()
