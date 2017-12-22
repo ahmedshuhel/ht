@@ -25,15 +25,15 @@ class Time(Base):
 
 
 class Task(Base):
-    def __init__(self, title):
+    def __init__(self, title, description):
         super(Task, self).__init__()
         self.title = title
         self.created_at = datetime.now()
-        self.description = ''
+        self.description = description
         self.state = TaskState.INIT
         self.times = []
 
-    def add_description(self, description):
+    def update_description(self, description):
         self.description = description
 
     def start(self):
