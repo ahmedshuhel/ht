@@ -1,4 +1,4 @@
-from ht.models.task import Task, Time
+from ht.models.task import Task, TaskState
 
 
 class TaskService(object):
@@ -17,4 +17,8 @@ class TaskService(object):
 
     def add_time(self, task_id, minutes, description=None):
         task = self.get_by_id(task_id)
-        task.add_time(Time(minutes, description))
+        if task.state < TaskState.IN_PROGRESS:
+            task.start()
+
+        task.add_time(minutes, description)
+        self.db.save_changes()
