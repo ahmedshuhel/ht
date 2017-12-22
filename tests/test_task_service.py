@@ -1,5 +1,19 @@
-from ht.models.task import Task
 from ht.db import db
+from ht.models.task import Task
+from ht.services import task_service
+
+title = 'title'
+desc = 'desc'
+
+
+def test_crate_task():
+    db.create_all()
+    task_id = task_service.create_task(title, desc)
+
+    q_task = db.query(Task).get(task_id)
+    assert q_task.title == title
+    assert q_task.description == desc
+    db.drop_all()
 
 
 def test_persist_task_with_all_attributes():
