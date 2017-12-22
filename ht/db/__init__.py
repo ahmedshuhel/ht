@@ -13,7 +13,7 @@ task_metadata = Table(
     Column('id', String, primary_key=True),
     Column('title', String(100)),
     Column('description', String(250)),
-    Column('state', String(50)),
+    Column('state', Integer),
     Column('created_at', DateTime)
 )
 
