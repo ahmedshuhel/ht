@@ -33,7 +33,7 @@ class Database(object):
             self.commit()
         except DBAPIError:
             self.rollback()
-        raise
+            raise
 
     def save_changes(self):
         self.commit_or_rollback()
