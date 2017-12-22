@@ -11,7 +11,9 @@ class TaskService(object):
     def create_task(self, title, description):
         task = Task(title, description)
         self.db.add(task)
+        task_id = task.id
         self.db.save_changes()
+        return task_id
 
     def add_time(self, task_id, minutes, description=None):
         task = self.get_by_id(task_id)
