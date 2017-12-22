@@ -12,9 +12,9 @@ class TaskError(Exception):
 
 
 class TaskState:
-    INIT = 'init'
-    IN_PROGRESS = 'in progress'
-    COMPLETED = 'completed'
+    INIT = 0
+    IN_PROGRESS = 1
+    COMPLETED = 2
 
 
 class Time(Base):
