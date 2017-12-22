@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine, MetaData
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
@@ -26,6 +27,17 @@ class Database(object):
 
     def rollback(self, *args, **kwargs):
         return self.session.rollback(*args, **kwargs)
+
+    def commit_or_rollback(self):
+        try:
+            self.commit()
+        except DBAPIError:
+            self.rollback()
+        raise
+
+    def save_changes(self):
+        self.commit_or_rollback()
+        self.session.remove()
 
     def create_all(self, *args, **kwargs):
         kwargs.setdefault('bind', self.engine)
