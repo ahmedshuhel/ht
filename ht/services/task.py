@@ -23,6 +23,11 @@ class TaskService(object):
         task.add_time(minutes, description)
         self.db.save_changes()
 
+    def start_task(self, task_id):
+        task = self.get_by_id(task_id)
+        task.start()
+        self.db.save_changes()
+
     def complete_task(self, task_id):
         task = self.get_by_id(task_id)
         task.complete()
