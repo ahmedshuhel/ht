@@ -77,7 +77,9 @@ def test_throw_if_start_a_not_init_task():
         task.start()
         task.complete()
         task.start()
-    assert str(err.value) == 'Cannot start a task in `completed` state'
+    assert str(err.value) == 'Cannot start a task in `{}` state'.format(
+        TaskState.COMPLETED
+    )
 
 
 def test_throw_if_complete_without_starting():

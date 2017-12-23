@@ -37,3 +37,9 @@ def test_add_time():
     assert len(q_task.times) == 1
     assert q_task.times[0].minutes == minutes1
     assert q_task.times[0].description == desc1
+
+
+def test_complete_task():
+    db.create_all()
+    task_id = create_task()
+    task_service.complete_task(task_id)
