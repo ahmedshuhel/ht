@@ -1,10 +1,5 @@
 from datetime import datetime
-from uuid import uuid4
-
-
-class Base(object):
-    def __init__(self):
-        self.id = str(uuid4())
+from .base import Base
 
 
 class TaskError(Exception):
@@ -28,7 +23,6 @@ class Task(Base):
     def __init__(self, title, description):
         super(Task, self).__init__()
         self.title = title
-        self.created_at = datetime.now()
         self.description = description
         self.state = TaskState.INIT
         self.times = []
