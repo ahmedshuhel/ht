@@ -16,7 +16,7 @@ def create_task():
     )
 
 
-@mock.patch('ht.models.task.uuid4')
+@mock.patch('ht.models.base.uuid4')
 def test_create_task(mock_uuid4):
     uuid = 'a1b2c3'
     mock_uuid4.return_value = uuid
@@ -27,7 +27,7 @@ def test_create_task(mock_uuid4):
     assert task.id == uuid
 
 
-@mock.patch('ht.models.task.datetime')
+@mock.patch('ht.models.base.datetime')
 def test_has_created_at(mock_datetime):
     mock_datetime.now.return_value = datetime.min
     task = create_task()
