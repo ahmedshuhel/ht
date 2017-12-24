@@ -1,4 +1,5 @@
 from ht.models.task import Task, Time
+from ht.models.list import List
 from sqlalchemy import Table, Column,\
      Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import mapper, relationship
@@ -31,3 +32,21 @@ mapper(Task, task_metadata, properties={
 })
 
 mapper(Time, time_metadata)
+
+list_metadata = Table(
+    'list', db.metadata,
+    Column('id', String, primary_key=True),
+    Column('title', String(100)),
+    Column('created_at', DateTime)
+)
+
+task_list_table = Table(
+    'list_task', db.metadata,
+    Column('id', Integer, primary_key=True),
+    Column('list_id', Integer, ForeignKey('list.id')),
+    Column('task_id', Integer, ForeignKey('task.id'))
+)
+
+mapper(List, list_metadata, properties={
+    'tasks': relationship(Task, secondary=task_list_table)
+})
