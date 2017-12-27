@@ -1,7 +1,8 @@
 import mock
+
+from datetime import datetime
 from ht.models.task import Task
 from ht.models.list import List
-from datetime import datetime
 
 
 title = 'This is a new task'
