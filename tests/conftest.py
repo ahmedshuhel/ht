@@ -5,6 +5,5 @@ from ht.db import db
 @fixture(autouse=True)
 def db_fixture():
     db.create_all()
-    yield db
+    yield
     db.drop_all()
-
