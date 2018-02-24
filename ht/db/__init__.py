@@ -26,12 +26,12 @@ time_metadata = Table(
     Column('task_id', Integer, ForeignKey('task.id'))
 )
 
-
-mapper(Task, task_metadata, properties={
-    'times': relationship(Time)
-})
-
-mapper(Time, time_metadata)
+task_list_table = Table(
+    'list_task', db.metadata,
+    Column('id', Integer, primary_key=True),
+    Column('list_id', Integer, ForeignKey('list.id')),
+    Column('task_id', Integer, ForeignKey('task.id'))
+)
 
 list_metadata = Table(
     'list', db.metadata,
@@ -40,13 +40,15 @@ list_metadata = Table(
     Column('created_at', DateTime)
 )
 
-task_list_table = Table(
-    'list_task', db.metadata,
-    Column('id', Integer, primary_key=True),
-    Column('list_id', Integer, ForeignKey('list.id')),
-    Column('task_id', Integer, ForeignKey('task.id'))
-)
-
 mapper(List, list_metadata, properties={
     'tasks': relationship(Task, secondary=task_list_table)
 })
+
+mapper(Task, task_metadata, properties={
+    'times': relationship(Time),
+    'list': relationship(
+        List, secondary=task_list_table, back_populates='tasks'
+    )
+})
+
+mapper(Time, time_metadata)

@@ -1,10 +1,10 @@
 from ht.models.list import List
+from ht.models.task import Task
 
 
 class ListService(object):
-    def __init__(self, db, task_svc):
+    def __init__(self, db):
         self.db = db
-        self.task_svc = task_svc
 
     def create_list(self, title):
         list = List(title)
@@ -18,6 +18,6 @@ class ListService(object):
 
     def add_task(self, list_id, task_id):
         list = self.get_by_id(list_id)
-        task = self.task_svc.get_by_id(task_id)
+        task = self.db.query(Task).get(task_id)
         list.add_task(task)
         self.db.save_changes()

@@ -1,18 +1,25 @@
 import mock
 import pytest
 from ht.models.task import Task, TaskState, TaskError
+from ht.models.list import List
 from datetime import datetime
 
 
 title = 'This is a new task'
 desc = 'This is description'
 created_at = datetime.min
+list_title = 'Backlog'
+
+
+def create_list():
+    return List(title=list_title)
 
 
 def create_task():
     return Task(
         title=title,
-        description=desc
+        description=desc,
+        list=create_list()
     )
 
 
@@ -25,6 +32,7 @@ def test_create_task(mock_uuid4):
     assert task.description == desc
     assert task.state == TaskState.INIT
     assert task.id == uuid
+    assert task.list.title == list_title
 
 
 @mock.patch('ht.models.base.datetime')

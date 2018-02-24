@@ -1,5 +1,6 @@
 from ht.db import db
 from ht.models.task import Task, TaskState
+from ht.models.list import List
 from ht.services import task_service
 
 title = 'title'
@@ -49,3 +50,10 @@ def test_complete_task():
     task_service.complete_task(task_id)
     q_task = get_task_by_id(task_id)
     assert q_task.state == TaskState.COMPLETED
+
+
+def test_task_be_in_backlog_list_on_creation():
+    list = db.query(List).filter(List.title == 'Backlog')
+    task_id = create_task()
+    task = get_task_by_id(task_id)
+    task.list == list
