@@ -18,8 +18,7 @@ def create_list():
 def create_task():
     return Task(
         title=title,
-        description=desc,
-        list=create_list()
+        description=desc
     )
 
 
@@ -32,7 +31,6 @@ def test_create_task(mock_uuid4):
     assert task.description == desc
     assert task.state == TaskState.INIT
     assert task.id == uuid
-    assert task.list.title == list_title
 
 
 @mock.patch('ht.models.base.datetime')

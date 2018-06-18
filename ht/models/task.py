@@ -20,12 +20,11 @@ class Time(Base):
 
 
 class Task(Base):
-    def __init__(self, title, description, list):
+    def __init__(self, title, description):
         super(Task, self).__init__()
         self.title = title
         self.description = description
         self.state = TaskState.INIT
-        self.list = list
         self.times = []
 
     def update_description(self, description):
