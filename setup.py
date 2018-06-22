@@ -21,14 +21,14 @@ def get_version():
 
 
 setup(
-    name='ht',
+    name='h',
     version=get_version() or '0.0-dev',
     packages=find_packages(exclude=('tests', 'tests.*')),
-    py_modules=['ht'],
+    py_modules=['h'],
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            'ht=ht.main:cli'
+            'h=h.main:cli'
         ]
     }
 )

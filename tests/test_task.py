@@ -1,7 +1,7 @@
 import mock
 import pytest
-from ht.models.task import Task, TaskState, TaskError
-from ht.models.list import List
+from h.models.task import Task, TaskState, TaskError
+from h.models.list import List
 from datetime import datetime
 
 
@@ -22,7 +22,7 @@ def create_task():
     )
 
 
-@mock.patch('ht.models.base.uuid4')
+@mock.patch('h.models.base.uuid4')
 def test_create_task(mock_uuid4):
     uuid = 'a1b2c3'
     mock_uuid4.return_value = uuid
@@ -33,7 +33,7 @@ def test_create_task(mock_uuid4):
     assert task.id == uuid
 
 
-@mock.patch('ht.models.base.datetime')
+@mock.patch('h.models.base.datetime')
 def test_has_created_at(mock_datetime):
     mock_datetime.now.return_value = datetime.min
     task = create_task()
@@ -53,7 +53,7 @@ def test_start_woring_on():
     assert task.state == TaskState.IN_PROGRESS
 
 
-@mock.patch('ht.models.task.datetime')
+@mock.patch('h.models.task.datetime')
 def test_record_start_time(mock_datetime):
     mock_datetime.now.return_value = datetime.min
     task = create_task()
@@ -68,7 +68,7 @@ def test_complete_task():
     assert task.state == TaskState.COMPLETED
 
 
-@mock.patch('ht.models.task.datetime')
+@mock.patch('h.models.task.datetime')
 def test_record_end_time(mock_datetime):
     mock_datetime.now.return_value = datetime.min
     task = create_task()

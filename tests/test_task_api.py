@@ -1,7 +1,7 @@
-from ht.db import db
-from ht.models.task import Task, TaskState
-from ht.models.list import List
-from ht.api import task_api as api
+from h.db import db
+from h.models.task import Task, TaskState
+from h.models.list import List
+from h.api import task_api as api
 
 title = 'title'
 desc = 'desc'

@@ -1,8 +1,8 @@
 import mock
 
 from datetime import datetime
-from ht.models.task import Task
-from ht.models.list import List
+from h.models.task import Task
+from h.models.list import List
 
 
 title = 'This is a new task'
@@ -21,7 +21,7 @@ def create_list():
     return List(title=title)
 
 
-@mock.patch('ht.models.base.uuid4')
+@mock.patch('h.models.base.uuid4')
 def test_create_list(mock_uuid4):
     uuid = 'a1b2c3'
     mock_uuid4.return_value = uuid
@@ -30,7 +30,7 @@ def test_create_list(mock_uuid4):
     assert list.id == uuid
 
 
-@mock.patch('ht.models.base.datetime')
+@mock.patch('h.models.base.datetime')
 def test_has_created_at(mock_datetime):
     mock_datetime.now.return_value = datetime.min
     list = create_list()

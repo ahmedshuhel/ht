@@ -1,6 +1,6 @@
 from pytest import fixture
-from ht.db import db
-from ht.api import task_api
+from h.db import db
+from h.api import task_api
 
 
 @fixture(autouse=True)

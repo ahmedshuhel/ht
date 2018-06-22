@@ -1,5 +1,5 @@
-from ht.models.list import List
-from ht.models.task import Task, TaskState
+from h.models.list import List
+from h.models.task import Task, TaskState
 
 
 class TaskApi(object):
