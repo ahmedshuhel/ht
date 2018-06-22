@@ -8,8 +8,11 @@ class Base(object):
         self.created_at = datetime.now()
 
     def __eq__(self, other):
-        """Overrides the default implementation"""
         if isinstance(other, Base):
             return self.id == other.id
         return False
 
+    def __ne__(self, other):
+        if isinstance(other, Base):
+            return self.id != other.id
+        return False
