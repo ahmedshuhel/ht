@@ -71,3 +71,18 @@ class TaskApi(object):
         list = self.get_list_by_id(list_id)
         task = self.db.query(Task).get(task_id)
         list.add_task(task)
+
+    def _remove_from_list(self, list_id, task_id):
+        list = self.get_list_by_id(list_id)
+        task = self.db.query(Task).get(task_id)
+        list.remove_task(task)
+
+    def remove_from_list(self, list_id, task_id):
+        self._remove_from_list(list_id, task_id)
+        self.db.save_changes()
+
+    def move_task(self, from_list_id, to_list_id, task_id):
+        self._remove_from_list(from_list_id, task_id)
+        self._add_to_list(to_list_id, task_id)
+        self.db.save_changes()
+

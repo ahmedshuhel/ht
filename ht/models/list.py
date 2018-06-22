@@ -16,6 +16,9 @@ class List(Base):
     def add_task(self, task):
         self.tasks.append(task)
 
+    def remove_task(self, task):
+        self.tasks.remove(task)
+
     @classmethod
     def create_backlog(cls):
         return List(cls.BACKLOG)
