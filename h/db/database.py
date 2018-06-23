@@ -1,3 +1,4 @@
+from h.config import Config
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -5,7 +6,10 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 class Database(object):
     def __init__(self):
-        self.engine = create_engine('sqlite:///:memory:', echo=True)
+        self.engine = create_engine(
+            Config.db['conn_string'],
+            echo=Config.db['echo']
+        )
         self.session = scoped_session(sessionmaker(bind=self.engine))
         self.metadata = MetaData()
 
