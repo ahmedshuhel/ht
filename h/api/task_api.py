@@ -1,4 +1,5 @@
 from h.models.list import List
+from h.models.board import Board
 from h.models.task import Task, TaskState
 
 
@@ -12,6 +13,15 @@ class TaskApi(object):
 
     def get_task_by_id(self, id):
         return self.db.query(Task).get(id)
+
+    def get_board_by_id(self, id):
+        return self.db.query(Board).get(id)
+
+    def get_backlog(self):
+        return self.db.query(List).filter(List.title == List.BACKLOG).one()
+
+    def get_list_by_id(self, id):
+        return self.db.query(List).get(id)
 
     def _create_task(self, title, description):
         task = Task(title, description)
@@ -57,12 +67,6 @@ class TaskApi(object):
         self.db.save_changes()
         return list_id
 
-    def get_backlog(self):
-        return self.db.query(List).filter(List.title == List.BACKLOG).one()
-
-    def get_list_by_id(self, id):
-        return self.db.query(List).get(id)
-
     def add_to_list(self, list_id, task_id):
         self._add_to_list(list_id, task_id)
         self.db.save_changes()
@@ -86,3 +90,21 @@ class TaskApi(object):
         self._add_to_list(to_list_id, task_id)
         self.db.save_changes()
 
+    def create_board(self, title, description=''):
+        board = Board(title, description)
+        self.db.add(board)
+        board_id = board.id
+        self.db.save_changes()
+        return board_id
+
+    def add_to_board(self, board_id, list_id):
+        board = self.get_board_by_id(board_id)
+        list = self.get_list_by_id(list_id)
+        board.add_list(list)
+        self.db.save_changes()
+
+    def remove_from_board(self, board_id, list_id):
+        board = self.get_board_by_id(board_id)
+        list = self.get_list_by_id(list_id)
+        board.remove_list(list)
+        self.db.save_changes()

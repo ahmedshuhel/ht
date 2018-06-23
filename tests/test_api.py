@@ -1,6 +1,7 @@
 from h.db import db
 from h.models.task import Task, TaskState
 from h.models.list import List
+from h.models.board import Board
 from h.api import task_api as api
 
 title = 'title'
@@ -15,12 +16,49 @@ def create_list(title='list title'):
     return api.create_list(title)
 
 
+def create_board(title='board title'):
+    return api.create_board(title)
+
+
 def get_task_by_id(id):
     return db.query(Task).get(id)
 
 
 def get_list(id):
     return db.query(List).get(id)
+
+
+def get_board(id):
+    return db.query(Board).get(id)
+
+
+class TestBoardApi(object):
+    def test_create_board(self):
+        board_id = create_board()
+        board = get_board(board_id)
+        assert board.title == 'board title'
+
+    def test_add_list_to_board(self):
+        board_id = create_board()
+        list_id = create_list()
+        api.add_to_board(board_id, list_id)
+
+        board = get_board(board_id)
+        assert len(board.lists) == 1
+        assert board.lists[0].title == 'list title'
+
+    def test_remove_list_from_board(self):
+        board_id = create_board()
+        list_id = create_list()
+        api.add_to_board(board_id, list_id)
+
+        board = get_board(board_id)
+        assert len(board.lists) == 1
+        assert board.lists[0].title == 'list title'
+
+        api.remove_from_board(board_id, list_id)
+        board = get_board(board_id)
+        assert len(board.lists) == 0
 
 
 class TestListApi(object):
