@@ -1,5 +1,6 @@
 from h.models.task import Task, Time
 from h.models.list import List
+from h.models.board import Board
 from sqlalchemy import Table, Column,\
      Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import mapper, relationship
@@ -8,6 +9,14 @@ from .database import Database
 
 
 db = Database()
+
+board_metadata = Table(
+    'board', db.metadata,
+    Column('id', String, primary_key=True),
+    Column('title', String(100)),
+    Column('description', String(250)),
+    Column('created_at', DateTime)
+)
 
 task_metadata = Table(
     'task', db.metadata,
@@ -33,6 +42,14 @@ task_list_table = Table(
     Column('task_id', Integer, ForeignKey('task.id'))
 )
 
+board_list_table = Table(
+    'board_list', db.metadata,
+    Column('id', Integer, primary_key=True),
+    Column('board_id', Integer, ForeignKey('board.id')),
+    Column('list_id', Integer, ForeignKey('list.id'))
+)
+
+
 list_metadata = Table(
     'list', db.metadata,
     Column('id', String, primary_key=True),
@@ -41,7 +58,14 @@ list_metadata = Table(
 )
 
 mapper(List, list_metadata, properties={
-    'tasks': relationship(Task, secondary=task_list_table)
+    'tasks': relationship(Task, secondary=task_list_table),
+    'board': relationship(
+        Board, secondary=board_list_table, back_populates='lists'
+    )
+})
+
+mapper(Board, board_metadata, properties={
+    'lists': relationship(List, secondary=board_list_table)
 })
 
 mapper(Task, task_metadata, properties={
