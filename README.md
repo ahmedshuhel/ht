@@ -1,9 +1,8 @@
-## Command Ideas
-
-### `ls`: list task
-
-`ht ls backlog` "list backlog with slno and title
-`ht ls todo` "list todos
-`ht show todo -n 1 "show task detail in todo sl 1
-
-
+### Todos:
+- [ ] Add `init` command: Initialize db, create default boards: backlog/todo
+- [ ] Add `create task` command: `h ct 'title' -d 'descrption'`
+- [ ] Add `create list` command: `h cl 'title'`
+- [ ] Add `create board` command: `h cb 'title'`
+- [ ] Add `list task` command: `h lst`
+- [ ] Add `list list` command: `h lsl`
+- [ ] Add `list board` command: `h lsb`

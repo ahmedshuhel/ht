@@ -22,4 +22,3 @@ class List(Base):
     @classmethod
     def create_backlog(cls):
         return List(cls.BACKLOG)
-
