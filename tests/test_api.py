@@ -107,7 +107,7 @@ class TestListApi(object):
         assert todo_list_id in task_list_ids
 
 
-class TestTaskApi(object):
+class TestTaskApi():
     def test_create_task(self):
         task_id = create_task()
 

@@ -1,10 +1,11 @@
-from h.config import Config
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import sessionmaker, scoped_session
 
+from h.config import Config
 
-class Database(object):
+
+class Database:
     def __init__(self):
         self.engine = create_engine(
             Config.db['conn_string'],

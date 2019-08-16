@@ -1,9 +1,10 @@
-import mock
-import pytest
-from h.models.task import Task, TaskState, TaskError
-from h.models.list import List
 from datetime import datetime
 
+import mock
+import pytest
+
+from h.models.list import List
+from h.models.task import Task, TaskError, TaskState
 
 title = 'This is a new task'
 desc = 'This is description'

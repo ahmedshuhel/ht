@@ -1,9 +1,10 @@
+from sqlalchemy import Table, Column,\
+    Integer, String, ForeignKey, DateTime
+from sqlalchemy.orm import mapper, relationship
+
 from h.models.task import Task, Time
 from h.models.list import List
 from h.models.board import Board
-from sqlalchemy import Table, Column,\
-     Integer, String, ForeignKey, DateTime
-from sqlalchemy.orm import mapper, relationship
 
 from .database import Database
 
